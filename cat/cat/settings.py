@@ -78,16 +78,26 @@ WSGI_APPLICATION = 'cat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cat_ftpo',  # Your database name
+#         'USER': 'cat_ftpo_user',  # Your database username
+#         'PASSWORD': 'H91NRk1vTHaUE3AP1mEXgF7OrDwtQqpE',  # Your database password
+#         'HOST': 'dpg-cvp2rqq4d50c73bnbpb0-a.singapore-postgres.render.com',  # Your database hostname
+#         'PORT': '5432',  # Default PostgreSQL port
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cat_ftpo',  # Your database name
-        'USER': 'cat_ftpo_user',  # Your database username
-        'PASSWORD': 'H91NRk1vTHaUE3AP1mEXgF7OrDwtQqpE',  # Your database password
-        'HOST': 'dpg-cvp2rqq4d50c73bnbpb0-a.singapore-postgres.render.com',  # Your database hostname
-        'PORT': '5432',  # Default PostgreSQL port
-    }
-}
+       'default': {
+           'ENGINE': 'django.db.backends.mysql',
+           'NAME': 'u206640416_catform',  # Your database name
+           'USER': 'u206640416_catform',        # Your MySQL username    
+           'PASSWORD': 'C]XQG?8o6',     # Your MySQL password
+           'HOST': '193.203.184.160',             # Set to 'localhost' or your MySQL server address
+           'PORT': '3306',                  # Default MySQL port
+       }
+   }
 
 
 # Password validation
