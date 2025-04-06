@@ -1,7 +1,5 @@
-
 {
     "version": 2,
-
     "builds": [{
         "src": "cat/wsgi.py",
         "use": "@ardnt/vercel-python-wsgi",
