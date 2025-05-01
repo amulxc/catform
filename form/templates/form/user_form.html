@@ -1,39 +1,254 @@
+{% load form_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>User Detail Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        /* Custom radio button styling */
+        .radio-container {
+            display: flex;
+            gap: 1rem;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+        }
+        .radio-item input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            display: grid;
+            place-content: center;
+            transition: all 0.3s ease;
+        }
+        .radio-item input[type="radio"]::before {
+            content: "";
+            width: 0.65rem;
+            height: 0.65rem;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+            box-shadow: inset 1em 1em #3b82f6;
+            background-color: #3b82f6;
+        }
+        .radio-item input[type="radio"]:checked {
+            border-color: #3b82f6;
+        }
+        .radio-item input[type="radio"]:checked::before {
+            transform: scale(1);
+        }
+        .radio-item label {
+            cursor: pointer;
+            padding-top: 2px;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-6">
+<body class="bg-gray-50 p-6">
+    <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 border border-gray-100">
+        <h1 class="text-3xl font-bold mb-8 text-center text-blue-600">User Detail Form</h1>
 
-    <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8">
-        <h1 class="text-3xl font-semibold mb-6 text-center text-blue-700">User Detail Form</h1>
-
-        <form method="post" novalidate>
+        <form method="post" novalidate class="space-y-6">
             {% csrf_token %}
-            {% for field in form %}
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-1">{{ field.label }}</label>
-                    
-                    <!-- Add custom classes for borders -->
+            
+            <!-- Name -->
+            <div class="grid grid-cols-1 gap-4">
+                <div id="name_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.name.label }}</label>
                     <div class="rounded-md">
-                        {{ field }}
+                        {{ form.name|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
                     </div>
-
-                    {% if field.errors %}
-                        <p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>
+                    {% if form.name.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.name.errors|striptags }}</p>
                     {% endif %}
                 </div>
-            {% endfor %}
+            </div>
 
-            <div class="text-center">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition">
+            <!-- Phone Number -->
+            <div class="grid grid-cols-1 gap-4">
+                <div id="contact_number_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.contact_number.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.contact_number|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.contact_number.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.contact_number.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="grid grid-cols-1 gap-4">
+                <div id="education_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.education.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.education|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.education.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.education.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Date of Birth and Gender -->
+            <div class="grid grid-cols-2 gap-4">
+                <div id="date_of_birth_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.date_of_birth.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.date_of_birth|add_class:"datepicker appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.date_of_birth.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.date_of_birth.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                <div id="gender_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.gender.label }}</label>
+                    <div class="radio-container mt-1">
+                        {% for choice in form.gender.field.choices %}
+                            <div class="radio-item">
+                                <input type="radio" name="gender" id="id_gender_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.gender.value == choice.0 %}checked{% endif %}>
+                                <label for="id_gender_{{ forloop.counter0 }}">{{ choice.1 }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if form.gender.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.gender.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Father and Mother Name -->
+            <div class="grid grid-cols-2 gap-4">
+                <div id="father_name_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.father_name.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.father_name|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.father_name.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.father_name.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                <div id="mother_name_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.mother_name.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.mother_name|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.mother_name.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.mother_name.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Marital Status and Husband/Wife Name -->
+            <div class="grid grid-cols-2 gap-4">
+                <div id="marital_status_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.marital_status.label }}</label>
+                    <div class="radio-container mt-1">
+                        {% for choice in form.marital_status.field.choices %}
+                            <div class="radio-item">
+                                <input type="radio" name="marital_status" id="id_marital_status_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.marital_status.value == choice.0 %}checked{% endif %}>
+                                <label for="id_marital_status_{{ forloop.counter0 }}">{{ choice.1 }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if form.marital_status.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.marital_status.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                <div id="husband_wife_name_container" class="hidden">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.husband_wife_name.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.husband_wife_name|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.husband_wife_name.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.husband_wife_name.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Native and Current Residence -->
+            <div class="grid grid-cols-2 gap-4">
+                <div id="native_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.native.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.native|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.native.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.native.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                <div id="current_resident_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.current_resident.label }}</label>
+                    <div class="rounded-md">
+                        {{ form.current_resident|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
+                    </div>
+                    {% if form.current_resident.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.current_resident.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Baptism Details -->
+            <div class="grid grid-cols-1 gap-4">
+                <div id="baptism_details_container">
+                    <label class="block text-gray-700 font-semibold mb-2">{{ form.baptism_details.label }}</label>
+                    <div class="radio-container mt-1">
+                        {% for choice in form.baptism_details.field.choices %}
+                            <div class="radio-item">
+                                <input type="radio" name="baptism_details" id="id_baptism_details_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.baptism_details.value == choice.0 %}checked{% endif %}>
+                                <label for="id_baptism_details_{{ forloop.counter0 }}">{{ choice.1 }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if form.baptism_details.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.baptism_details.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                     Submit
                 </button>
             </div>
         </form>
     </div>
+    <script>
+       $(document).ready(function() {
+            // Datepicker initialization with min date set to January 1, 2000
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "2000:+0",  // Changed from "-100:+0" to "2000:+0"
+                minDate: new Date(2000, 0, 1)  // January 1, 2000 (months are 0-indexed)
+            });
 
+            // Marital status change handler
+            $('input[name="marital_status"]').change(function() {
+                const husbandWifeContainer = $('#husband_wife_name_container');
+                if ($(this).val() === 'Yes') {
+                    husbandWifeContainer.removeClass('hidden');
+                } else {
+                    husbandWifeContainer.addClass('hidden');
+                    $('#id_husband_wife_name').val(''); // Clear the field when hidden
+                }
+            });
+
+            // Trigger the change event on page load to set initial state
+            $('input[name="marital_status"]:checked').trigger('change');
+        });
+    </script>
 </body>
 </html>
