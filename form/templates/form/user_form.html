@@ -53,6 +53,11 @@
             cursor: pointer;
             padding-top: 2px;
         }
+        .required-field::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
     </style>
 </head>
 <body class="bg-gray-50 p-6">
@@ -65,7 +70,7 @@
             <!-- Name -->
             <div class="grid grid-cols-1 gap-4">
                 <div id="name_container">
-                    <label class="block text-gray-700 font-semibold mb-2">{{ form.name.label }}</label>
+                    <label class="block text-gray-700 font-semibold mb-2 required-field">{{ form.name.label }}</label>
                     <div class="rounded-md">
                         {{ form.name|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
                     </div>
@@ -78,7 +83,7 @@
             <!-- Phone Number -->
             <div class="grid grid-cols-1 gap-4">
                 <div id="contact_number_container">
-                    <label class="block text-gray-700 font-semibold mb-2">{{ form.contact_number.label }}</label>
+                    <label class="block text-gray-700 font-semibold mb-2 required-field">{{ form.contact_number.label }}</label>
                     <div class="rounded-md">
                         {{ form.contact_number|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
                     </div>
@@ -104,7 +109,7 @@
             <!-- Date of Birth and Gender -->
             <div class="grid grid-cols-2 gap-4">
                 <div id="date_of_birth_container">
-                    <label class="block text-gray-700 font-semibold mb-2">{{ form.date_of_birth.label }}</label>
+                    <label class="block text-gray-700 font-semibold mb-2 required-field">{{ form.date_of_birth.label }}</label>
                     <div class="rounded-md">
                         {{ form.date_of_birth|add_class:"datepicker appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
                     </div>
@@ -113,7 +118,7 @@
                     {% endif %}
                 </div>
                 <div id="gender_container">
-                    <label class="block text-gray-700 font-semibold mb-2">{{ form.gender.label }}</label>
+                    <label class="block text-gray-700 font-semibold mb-2 required-field">{{ form.gender.label }}</label>
                     <div class="radio-container mt-1">
                         {% for choice in form.gender.field.choices %}
                             <div class="radio-item">
@@ -153,7 +158,7 @@
             <!-- Marital Status and Husband/Wife Name -->
             <div class="grid grid-cols-2 gap-4">
                 <div id="marital_status_container">
-                    <label class="block text-gray-700 font-semibold mb-2">{{ form.marital_status.label }}</label>
+                    <label class="block text-gray-700 font-semibold mb-2 required-field">{{ form.marital_status.label }}</label>
                     <div class="radio-container mt-1">
                         {% for choice in form.marital_status.field.choices %}
                             <div class="radio-item">
@@ -189,7 +194,7 @@
                     {% endif %}
                 </div>
                 <div id="current_resident_container">
-                    <label class="block text-gray-700 font-semibold mb-2">{{ form.current_resident.label }}</label>
+                    <label class="block text-gray-700 font-semibold mb-2 required-field">{{ form.current_resident.label }}</label>
                     <div class="rounded-md">
                         {{ form.current_resident|add_class:"appearance-none border border-gray-300 rounded-md w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
                     </div>
@@ -202,7 +207,7 @@
             <!-- Baptism Details -->
             <div class="grid grid-cols-1 gap-4">
                 <div id="baptism_details_container">
-                    <label class="block text-gray-700 font-semibold mb-2">{{ form.baptism_details.label }}</label>
+                    <label class="block text-gray-700 font-semibold mb-2 required-field">{{ form.baptism_details.label }}</label>
                     <div class="radio-container mt-1">
                         {% for choice in form.baptism_details.field.choices %}
                             <div class="radio-item">
