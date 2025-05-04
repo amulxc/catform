@@ -14,7 +14,7 @@ class UserDetail(models.Model):
     MARITAL_STATUS_CHOICES = [('Yes', 'Yes'), ('No', 'No')]
     marital_status = models.CharField(max_length=3, choices=MARITAL_STATUS_CHOICES)
 
-    husband_wife_name = models.CharField(max_length=100, blank=True, verbose_name="Husband/Wife Name")
+    husband_wife_name = models.CharField(max_length=100, blank=True, verbose_name="Husband/ Wife Name")
     native = models.CharField(max_length=100, blank=True)
     current_resident = models.CharField(max_length=100)
 
