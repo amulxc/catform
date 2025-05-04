@@ -13,3 +13,6 @@ def user_form(request):
 
 def form_success(request):
     return render(request, 'form/success.html')
+
+def index(request):
+    return render(request, 'form/index.html')
